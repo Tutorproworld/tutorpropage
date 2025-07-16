@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorPro - Consultoría para Exámenes Internacionales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at top, #1e3a8a 0%, #0f172a 50%, #020617 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="g1"><stop offset="0%" stop-color="%23667eea" stop-opacity="0.1"/><stop offset="100%" stop-color="%23667eea" stop-opacity="0"/></radialGradient></defs><circle cx="25" cy="25" r="20" fill="url(%23g1)"/><circle cx="75" cy="75" r="25" fill="url(%23g1)"/></svg>');
+            animation: subtleFloat 20s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes subtleFloat {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(-20px) translateY(-20px); }
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.3));
+            }
+            50% { 
+                filter: drop-shadow(0 0 16px rgba(102, 126, 234, 0.6));
+            }
+        }
+
+        @keyframes textShimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+        }
+
+        /* Header Mejorado */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: clamp(0.8rem, 2vw, 1.2rem) 0;
+            position: relative;
+        }
+
+        /* Logo Container Mejorado */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.8rem, 2vw, 1.2rem);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo-container:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Logo Image */
+        .logo-image {
+            width: clamp(45px, 8vw, 65px);
+            height: clamp(45px, 8vw, 65px);
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            animation: logoGlow 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Placeholder para cuando no hay logo */
+        .logo-placeholder {
+            color: white;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 900;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Logo real (oculto hasta que se añada la imagen) */
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            display: none; /* Se mostrará cuando se añada la imagen */
+        }
+
+        /* Logo Text Mejorado */
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo-main {
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            font-weight: 900;
+            background: linear-gradient(
+                135deg, 
+                #ffffff 0%, 
+                var(--accent) 30%, 
+                var(--primary) 60%, 
+                #ffffff 100%
+            );
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShimmer 4s ease-in-out infinite;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            position: relative;
+        }
+
+        .logo-main::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .logo-container:hover .logo-main::after {
+            width: 100%;
+        }
+
+        .logo-subtitle {
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: clamp(2px, 1vw, 4px);
+            opacity: 0.9;
+        }
+
+        /* Efecto hover mejorado */
+        .logo-container:hover .logo-image {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .logo-container:hover .logo-subtitle {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: clamp(120px, 15vh, 140px) 0 clamp(40px, 8vh, 60px);
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: clamp(1rem, 3vw, 1.5rem);
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: var(--text-secondary);
+            margin-bottom: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 400;
+        }
+
+        .hero .description {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: var(--text-muted);
+            margin-bottom: clamp(2rem, 5vw, 3rem);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: clamp(1rem, 3vw, 1.5rem);
+            margin-bottom: clamp(2rem, 5vw, 3rem);
+        }
+
+        .feature-badge {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: clamp(0.8rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        .feature-badge:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: clamp(1rem, 3vw, 1.5rem);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(15px);
+        }
+
+        /* Sections */
+        .section {
+            padding: clamp(40px, 10vw, 80px) 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: clamp(2rem, 5vw, 3rem);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            font-weight: 700;
+            margin-bottom: clamp(0.5rem, 2vw, 1rem);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: clamp(2rem, 5vw, 2.5rem);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            margin-bottom: clamp(1rem, 3vw, 1.5rem);
+            display: block;
+        }
+
+        .service-card h3 {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            margin-bottom: clamp(0.8rem, 2vw, 1rem);
+            color: var(--text-primary);
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .service-features li {
+            padding: clamp(0.3rem, 1vw, 0.5rem) 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* About Section */
+        .about-main-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: clamp(2rem, 5vw, 3rem);
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+        }
+
+        .about-main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .about-main-card:hover::before {
+            opacity: 1;
+        }
+
+        .about-icon {
+            font-size: clamp(2.5rem, 6vw, 3rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            display: block;
+        }
+
+        .about-main-card h3 {
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-weight: 700;
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .about-point {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.8rem, 2vw, 1rem);
+            padding: clamp(0.8rem, 2vw, 1rem);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .about-point:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .point-icon {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .point-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .point-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Stats Grid */
+        .about-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: clamp(1rem, 3vw, 1.5rem);
+        }
+
+        .stat-card-enhanced {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card-enhanced:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .stat-icon {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+        }
+
+        .stat-card-enhanced .stat-number {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-card-enhanced .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            margin-bottom: clamp(0.5rem, 1vw, 0.8rem);
+        }
+
+        .stat-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 2px;
+            animation: fillBar 2s ease-out;
+        }
+
+        @keyframes fillBar {
+            from { width: 0%; }
+        }
+
+        /* Process */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .process-number {
+            width: clamp(50px, 10vw, 60px);
+            height: clamp(50px, 10vw, 60px);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: bold;
+            margin: 0 auto clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Results Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 800;
+            margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .stat-description {
+            color: var(--text-muted);
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+            margin-top: clamp(0.3rem, 1vw, 0.5rem);
+        }
+
+        /* Exams */
+        .exams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .exam-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .exam-card h3 {
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: clamp(0.8rem, 2vw, 1rem);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .exam-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: clamp(1rem, 3vw, 1.5rem);
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+        }
+
+        .exam-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: clamp(0.5rem, 2vw, 1rem);
+            margin-top: clamp(0.8rem, 2vw, 1rem);
+            flex-wrap: wrap;
+        }
+
+        .exam-score, .exam-duration {
+            background: rgba(255, 255, 255, 0.05);
+            padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.8rem, 2vw, 1rem);
+            border-radius: 25px;
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            flex: 1;
+            min-width: 80px;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .contact-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: clamp(2rem, 5vw, 2.5rem);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .contact-card h3 {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 700;
+            margin-bottom: clamp(0.8rem, 2vw, 1rem);
+            color: var(--text-primary);
+        }
+
+        .contact-card .primary-info {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: clamp(0.8rem, 2vw, 1rem);
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(79, 172, 254, 0.1));
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            padding: clamp(1rem, 3vw, 1.5rem);
+            margin: clamp(1rem, 3vw, 2rem) 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlight-text {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .certification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: clamp(0.8rem, 2vw, 1rem);
+        }
+
+        .cert-card {
+            text-align: center;
+            padding: clamp(0.8rem, 2vw, 1rem);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .cert-icon {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            padding: clamp(20px, 5vw, 30px) 0 clamp(10px, 3vw, 15px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        footer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer-highlight {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Desktop specific styles */
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .cta-group {
+                flex-wrap: nowrap;
+            }
+            
+            .btn {
+                min-width: 180px;
+            }
+        }
+
+        /* Large desktop */
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 767px) {
+            .exam-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .exam-score, .exam-duration {
+                flex: none;
+            }
+            
+            .about-point {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .point-icon {
+                align-self: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .logo-container {
+                gap: clamp(0.6rem, 3vw, 1rem);
+            }
+            
+            .logo-text {
+                align-items: flex-start;
+            }
+            
+            .nav {
+                padding: 1rem 0;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .about-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .certification-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <!-- Logo Container Mejorado -->
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <!-- Tu logo.png irá aquí -->
+                    <img src="logo.png" alt="TutorPro Logo" style="display: none;" id="logoImg">
+                    <!-- Placeholder mientras tanto -->
+                    <div class="logo-placeholder" id="logoPlaceholder">TP</div>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">TutorPro</div>
+                    <div class="logo-subtitle">Expert Coaching</div>
+                </div>
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Domina los Exámenes Internacionales de Inglés</h1>
+                <p class="subtitle">Metodología comprobada para resultados excepcionales</p>
+                <p class="description">
+                    Transforma tu futuro académico con nuestro sistema personalizado que ha ayudado a más de 500 estudiantes a alcanzar sus objetivos en universidades de élite mundial.
+                </p>
+                
+                <div class="features-grid">
+                    <div class="feature-badge">
+                        <strong>95%</strong> Tasa de Éxito
+                    </div>
+                    <div class="feature-badge">
+                        <strong>+28</strong> Puntos Promedio
+                    </div>
+                    <div class="feature-badge">
+                        <strong>50+</strong> Países Atendidos
+                    </div>
+                    <div class="feature-badge">
+                        <strong>72h</strong> Primeras Mejoras
+                    </div>
+                </div>
+                
+                <div class="cta-group">
+                    <a href="https://wa.me/573124200315?text=Hola%2C%20estoy%20interesado%20en%20consultoría%20personalizada" class="btn btn-primary">Consultoría Premium</a>
+                    <a href="https://ebooktoefl.netlify.app/" class="btn btn-secondary" target="_blank">Guía Digital</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in" id="servicios">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <p class="section-subtitle">
+                    Soluciones personalizadas diseñadas para maximizar tu rendimiento y garantizar resultados excepcionales.
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon">📚</span>
+                    <h3>Guía Digital Completa</h3>
+                    <p>Sistema integral de preparación con simulacros avanzados, estrategias probadas y plantillas exclusivas para cada sección del examen.</p>
+                    <ul class="service-features">
+                        <li>Simulacros completos con sistema de evaluación automática</li>
+                        <li>Plantillas optimizadas para Writing Tasks</li>
+                        <li>Videos estratégicos para cada sección</li>
+                        <li>Sistema de seguimiento de progreso detallado</li>
+                        <li>Actualizaciones regulares con contenido nuevo</li>
+                        <li>Acceso inmediato y permanente</li>
+                    </ul>
+                    <a href="https://ebooktoefl.netlify.app/" class="btn btn-secondary" target="_blank">Explorar Guía</a>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">👨‍🎓</span>
+                    <h3>Consultoría Premium 1-on-1</h3>
+                    <p>Mentoría personalizada con experto certificado. Sesiones individuales diseñadas para acelerar tu progreso y optimizar tu estrategia de estudio.</p>
+                    <ul class="service-features">
+                        <li>Evaluación diagnóstica completa personalizada</li>
+                        <li>Plan de estudio estratégico customizado</li>
+                        <li>Sesiones en vivo exclusivas vía videollamada</li>
+                        <li>Feedback detallado en tiempo real</li>
+                        <li>Simulacros supervisados con análisis experto</li>
+                        <li>Garantía de mejora measurable</li>
+                    </ul>
+                    <a href="https://wa.me/573124200315?text=Necesito%20información%20sobre%20consultoría%20personalizada" class="btn btn-primary">Agendar Consulta</a>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">💎</span>
+                    <h3>Paquete VIP Integral</h3>
+                    <p>La experiencia completa que combina nuestra guía digital avanzada con sesiones de mentoría premium para resultados maximizados.</p>
+                    <ul class="service-features">
+                        <li>Acceso completo a Guía Digital Premium</li>
+                        <li>Múltiples sesiones de mentoría personalizada</li>
+                        <li>Revisión ilimitada de ensayos y speaking</li>
+                        <li>Acceso prioritario a recursos exclusivos</li>
+                        <li>Soporte directo vía WhatsApp</li>
+                        <li>Garantía de satisfacción total</li>
+                    </ul>
+                    <a href="https://wa.me/573124200315?text=Me%20interesa%20el%20paquete%20VIP%20completo" class="btn btn-primary">Obtener VIP</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in" id="sobre-nosotros">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sobre TutorPro</h2>
+                <p class="section-subtitle">
+                    Experiencia, metodología y resultados que respaldan nuestra excelencia en preparación de exámenes internacionales.
+                </p>
+            </div>
+
+            <div class="about-main-card">
+                <div class="about-icon">🎯</div>
+                <h3>Metodología Comprobada</h3>
+                <div class="about-content">
+                    <div class="about-point">
+                        <div class="point-icon">🚀</div>
+                        <div class="point-text">
+                            <strong>5+ años de experiencia</strong> transformando destinos académicos con metodologías 
+                            revolucionarias que combinan neurociencia del aprendizaje con tecnología educativa de vanguardia.
+                        </div>
+                    </div>
+                    
+                    <div class="about-point">
+                        <div class="point-icon">🌟</div>
+                        <div class="point-text">
+                            <strong>Sistema único</strong> que ha catapultado a más de 500 estudiantes hacia sus universidades soñadas, 
+                            con una tasa de éxito del 95% y mejoras promedio de 28+ puntos en TOEFL iBT.
+                        </div>
+                    </div>
+                    
+                    <div class="about-point">
+                        <div class="point-icon">💎</div>
+                        <div class="point-text">
+                            <strong>Coaching de alto rendimiento</strong> para profesionales y estudiantes que buscan 
+                            la excelencia académica con metodologías innovadoras y resultados comprobados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-stats-grid">
+                <div class="stat-card-enhanced">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Estudiantes Transformados</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                
+                <div class="stat-card-enhanced">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Tasa de Éxito</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 95%;"></div>
+                    </div>
+                </div>
+                
+                <div class="stat-card-enhanced">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Países Atendidos</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+                
+                <div class="stat-card-enhanced">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Años de Experiencia</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 90%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4 style="font-size: clamp(1rem, 3vw, 1.2rem); font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
+                    🏆 Reconocimientos y Experiencia
+                </h4>
+                <div class="certification-grid">
+                    <div class="cert-card">
+                        <div class="cert-icon">🎓</div>
+                        <strong class="highlight-text">Metodología Probada</strong>
+                        <p style="font-size: clamp(0.8rem, 2vw, 0.9rem); color: var(--text-secondary); margin: 0;">Sistema de Enseñanza Único</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">⭐</div>
+                        <strong class="highlight-text">Expertos Cualificados</strong>
+                        <p style="font-size: clamp(0.8rem, 2vw, 0.9rem); color: var(--text-secondary); margin: 0;">Especialistas en Exámenes</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">💯</div>
+                        <strong class="highlight-text">5★ Rating</strong>
+                        <p style="font-size: clamp(0.8rem, 2vw, 0.9rem); color: var(--text-secondary); margin: 0;">500+ Reseñas Verificadas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in" id="proceso">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Metodología de 5 Fases</h2>
+                <p class="section-subtitle">
+                    Sistema estructurado diseñado para maximizar tu progreso y garantizar resultados excepcionales.
+                </p>
+            </div>
+
+            <div class="process-grid">
+                <div class="service-card" style="text-align: center;">
+                    <div class="process-number">1</div>
+                    <h3 style="font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Evaluación Inicial</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; font-size: clamp(0.9rem, 2vw, 1rem);">
+                        Diagnóstico completo de 360° para identificar tu nivel actual, fortalezas y áreas de mejora específicas.
+                    </p>
+                </div>
+
+                <div class="service-card" style="text-align: center;">
+                    <div class="process-number">2</div>
+                    <h3 style="font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Plan Personalizado</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; font-size: clamp(0.9rem, 2vw, 1rem);">
+                        Creación de una estrategia de estudio customizada basada en tu perfil único, objetivos y disponibilidad de tiempo.
+                    </p>
+                </div>
+
+                <div class="service-card" style="text-align: center;">
+                    <div class="process-number">3</div>
+                    <h3 style="font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Preparación Intensiva</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; font-size: clamp(0.9rem, 2vw, 1rem);">
+                        Sesiones focalizadas con técnicas avanzadas, práctica deliberada y recursos exclusivos para cada sección.
+                    </p>
+                </div>
+
+                <div class="service-card" style="text-align: center;">
+                    <div class="process-number">4</div>
+                    <h3 style="font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Simulacros y Feedback</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; font-size: clamp(0.9rem, 2vw, 1rem);">
+                        Exámenes de práctica en condiciones reales con retroalimentación detallada y ajustes estratégicos.
+                    </p>
+                </div>
+
+                <div class="service-card" style="text-align: center;">
+                    <div class="process-number">5</div>
+                    <h3 style="font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Éxito Garantizado</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; font-size: clamp(0.9rem, 2vw, 1rem);">
+                        Alcanzas tu puntuación objetivo con confianza total y las habilidades necesarias para el éxito académico.
+                    </p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p style="text-align: center; margin: 0; font-size: clamp(0.9rem, 2vw, 1rem);">
+                    <strong class="highlight-text">Tiempo promedio de preparación:</strong> 6-12 semanas para mejoras significativas, 
+                    con primeros resultados visibles en las <strong class="highlight-text">primeras 72 horas</strong>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in" id="resultados">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Resultados Comprobados</h2>
+                <p class="section-subtitle">
+                    Nuestros números reflejan el compromiso con la excelencia y el éxito de nuestros estudiantes.
+                </p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Estudiantes Exitosos</div>
+                    <div class="stat-description">Transformados globalmente</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Tasa de Éxito</div>
+                    <div class="stat-description">Superando expectativas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Países Atendidos</div>
+                    <div class="stat-description">Alcance mundial</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">28+</div>
+                    <div class="stat-label">Puntos de Mejora</div>
+                    <div class="stat-description">Promedio en TOEFL</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p style="text-align: center; margin: 0; font-size: clamp(0.9rem, 2vw, 1rem);">
+                    <strong class="highlight-text">89% de nuestros estudiantes</strong> son aceptados en universidades Top 100 mundial, 
+                    con <strong class="highlight-text">$2.3M+ en becas</strong> obtenidas colectivamente.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in" id="examenes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Exámenes que Preparamos</h2>
+                <p class="section-subtitle">
+                    Especialistas en todas las principales evaluaciones internacionales de inglés.
+                </p>
+            </div>
+            
+            <div class="exams-grid">
+                <div class="exam-card">
+                    <h3>TOEFL iBT</h3>
+                    <p>El estándar dorado para universidades estadounidenses. Test académico 100% digital con reconocimiento mundial y validez de 2 años.</p>
+                    <div class="exam-meta">
+                        <div class="exam-score">0-120 puntos</div>
+                        <div class="exam-duration">3 horas</div>
+                    </div>
+                </div>
+                
+                <div class="exam-card">
+                    <h3>IELTS Academic</h3>
+                    <p>Preferido por universidades británicas, australianas y canadienses. Disponible en modalidades Academic y General Training.</p>
+                    <div class="exam-meta">
+                        <div class="exam-score">0-9 bandas</div>
+                        <div class="exam-duration">2h 45min</div>
+                    </div>
+                </div>
+                
+                <div class="exam-card">
+                    <h3>ITEP Academic</h3>
+                    <p>Evaluación innovadora y eficiente. Resultados disponibles en 24 horas con creciente aceptación en instituciones globales.</p>
+                    <div class="exam-meta">
+                        <div class="exam-score">0-6 niveles</div>
+                        <div class="exam-duration">90 minutos</div>
+                    </div>
+                </div>
+                
+                <div class="exam-card">
+                    <h3>Linguaskill</h3>
+                    <p>Tecnología adaptativa avanzada de Cambridge. Ideal para contextos corporativos y académicos con evaluación personalizada.</p>
+                    <div class="exam-meta">
+                        <div class="exam-score">82-180 puntos</div>
+                        <div class="exam-duration">Adaptativo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in" id="contacto">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Inicia Tu Transformación</h2>
+                <p class="section-subtitle">
+                    Conéctate con nosotros y comienza tu camino hacia el éxito académico internacional.
+                </p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>WhatsApp Directo</h3>
+                    <p class="primary-info">+57 312 420 0315</p>
+                    <p>Respuesta inmediata las 24 horas</p>
+                    <p>Consulta estratégica inicial gratuita</p>
+                    <p>Soporte personalizado continuo</p>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>Correo Electrónico</h3>
+                    <p class="primary-info">tutorproworld@gmail.com</p>
+                    <p>Evaluaciones detalladas por escrito</p>
+                    <p>Reportes de progreso personalizados</p>
+                    <p>Documentación académica oficial</p>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>Alcance Global</h3>
+                    <p class="primary-info">Servicio Mundial</p>
+                    <p>Horarios flexibles adaptados a tu zona</p>
+                    <p>Plataforma tecnológica de vanguardia</p>
+                    <p>Metodología respaldada por resultados</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: clamp(2rem, 5vw, 3rem);">
+                <a href="https://wa.me/573124200315?text=Hola%2C%20estoy%20listo%20para%20comenzar%20mi%20preparación%20para%20exámenes%20internacionales" class="btn btn-primary" style="font-size: clamp(1rem, 2.5vw, 1.1rem); padding: clamp(1rem, 3vw, 1.2rem) clamp(2rem, 5vw, 2.5rem);">
+                    Comenzar Mi Preparación
+                </a>
+            </div>
+
+            <div class="highlight-box">
+                <p style="text-align: center; margin: 0; font-size: clamp(0.9rem, 2vw, 1rem);">
+                    <strong class="highlight-text">Garantía de satisfacción:</strong> Si no estás completamente satisfecho con nuestros servicios, 
+                    te devolvemos tu inversión sin preguntas.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p class="footer-highlight">&copy; 2025 TutorPro. Transformando futuros académicos a nivel global.</p>
+            <p>Especialistas en TOEFL • IELTS • ITEP • Linguaskill</p>
+            <p>Metodología respaldada por neurociencia del aprendizaje y tecnología educativa avanzada</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para manejar el logo
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoImg = document.getElementById('logoImg');
+            const logoPlaceholder = document.getElementById('logoPlaceholder');
+            
+            // Verificar si el logo existe
+            logoImg.onload = function() {
+                logoPlaceholder.style.display = 'none';
+                logoImg.style.display = 'block';
+            };
+            
+            logoImg.onerror = function() {
+                // Si no se puede cargar el logo, mantener el placeholder
+                console.log('Logo no encontrado, usando placeholder');
+            };
+            
+            // Intentar cargar el logo
+            logoImg.src = 'logo.png';
+        });
+
+        // Crear botón de WhatsApp flotante
+        const whatsappBtn = document.createElement('a');
+        whatsappBtn.href = 'https://wa.me/573124200315?text=Hola%2C%20tengo%20una%20consulta%20sobre%20TutorPro';
+        whatsappBtn.target = '_blank';
+        whatsappBtn.style.cssText = `
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            width: 60px !important;
+            height: 60px !important;
+            background: #25d366 !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4) !important;
+            z-index: 999999 !important;
+            transition: all 0.3s ease !important;
+            text-decoration: none !important;
+        `;
+        
+        whatsappBtn.innerHTML = `
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                <path d="M20.52 3.48A11.77 11.77 0 0 0 12 0C5.48 0 .18 5.3.18 11.82c0 2.08.54 4.11 1.56 5.9L0 24l6.5-1.7a11.8 11.8 0 0 0 5.5 1.4c6.52 0 11.82-5.3 11.82-11.82 0-3.16-1.23-6.13-3.46-8.4ZM12 21.58c-1.76 0-3.48-.47-4.99-1.36l-.36-.21-3.71.97 1-3.65-.23-.37A9.63 9.63 0 0 1 2.2 11.82 9.64 9.64 0 0 1 12 2.18a9.64 9.64 0 0 1 9.64 9.64c0 5.31-4.33 9.64-9.64 9.64Zm5.27-7.21c-.29-.14-1.7-.84-1.96-.93-.26-.1-.45-.14-.64.14-.19.29-.74.93-.91 1.12s-.33.21-.62.07c-.29-.14-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.44.13-.58.13-.13.29-.33.43-.5.14-.16.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.55-.88-2.12-.23-.56-.47-.48-.64-.49h-.55c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.39s1.02 2.77 1.17 2.96c.14.19 2.08 3.18 5.04 4.46.7.31 1.25.49 1.68.63.71.22 1.35.19 1.86.12.57-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33Z"/>
+            </svg>
+        `;
+        
+        whatsappBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+            this.style.boxShadow = '0 12px 35px rgba(37, 211, 102, 0.6)';
+        });
+        
+        whatsappBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.4)';
+        });
+        
+        document.body.appendChild(whatsappBtn);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect mejorado
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+                header.style.backdropFilter = 'blur(30px)';
+                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.background = 'var(--glass-bg)';
+                header.style.backdropFilter = 'blur(25px)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+            }
+        });
+
+        // Fade in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Card hover effects
+        document.querySelectorAll('.service-card, .stat-card, .stat-card-enhanced, .exam-card, .contact-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                this.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.5)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'var(--glass-shadow)';
+            });
+        });
+    </script>
+</body>
+</html>
